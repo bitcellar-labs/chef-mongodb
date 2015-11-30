@@ -102,11 +102,17 @@ when 'rhel', 'fedora'
   end
 when 'debian'
   if node['platform'] == 'ubuntu'
-    default[:mongodb][:apt_repo] = 'ubuntu-upstart'
+    default[:mongodb][:apt_repo] = 'ubuntu'
+    if node['platform_version'] == '12.04'
+      default[:mongodb][:apt_distribution] = 'precise/mongodb-org/3.0'
+    else
+      default[:mongodb][:apt_distribution] = 'trusty/mongodb-org/3.0'
+    end
     default[:mongodb][:init_dir] = '/etc/init/'
     default[:mongodb][:init_script_template] = 'debian-mongodb.upstart.erb'
   else
-    default[:mongodb][:apt_repo] = 'debian-sysvinit'
+    default[:mongodb][:apt_repo] = 'debian'
+    default[:mongodb][:apt_distribution] = 'wheezy/mongodb-org/3.0'
   end
 else
   Chef::Log.error("Unsupported Platform Family: #{node['platform_family']}")

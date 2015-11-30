@@ -27,9 +27,9 @@ case node['platform_family']
 when 'debian'
   # Adds the repo: http://www.mongodb.org/display/DOCS/Ubuntu+and+Debian+packages
   apt_repository 'mongodb' do
-    uri "http://downloads-distro.mongodb.org/repo/#{node[:mongodb][:apt_repo]}"
-    distribution 'dist'
-    components ['10gen']
+    uri "http://repo.mongodb.org/apt/#{node[:mongodb][:apt_repo]}"
+    distribution node[:mongodb][:apt_distribution]
+    components ['multiverse']
     keyserver 'hkp://keyserver.ubuntu.com:80'
     key '7F0CEB10'
     action :add
